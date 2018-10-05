@@ -24,6 +24,7 @@ class KindergardenController {
     fun createKindergarden(@PathVariable("customer-id") id: UUID, @RequestBody dto: KindergardenDto): ResponseEntity<Kindergarden> {
         val customer = customerRepository.findById(id).get()
         val kindergarden = Kindergarden(name = dto.name, customer = customer)
+        kindergardenRepository.save(kindergarden)
         return ResponseEntity(kindergarden, HttpStatus.CREATED)
     }
 

@@ -23,7 +23,7 @@ class CustomerController {
 
     @GetMapping(value = ["/customers"])
     @ResponseBody
-    fun getAllCustomer(): List<Customer> {
-        return customerRepository.findAll().toList()
+    fun getAllCustomer(): List<CustomerDto> {
+        return customerRepository.findAll().map { customer -> customer.toDto() }.toList().requireNoNulls()
     }
 }

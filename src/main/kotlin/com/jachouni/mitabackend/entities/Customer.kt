@@ -1,5 +1,6 @@
 package com.jachouni.mitabackend.entities
 
+import com.jachouni.mitabackend.CustomerDto
 import java.util.*
 import javax.persistence.*
 
@@ -12,5 +13,14 @@ data class Customer(
 
     @OneToMany(mappedBy = "customer")
     val kindergardens: MutableList<Kindergarden> = mutableListOf()
+
+    fun toDto(): CustomerDto? {
+        val customerDto = CustomerDto(id = this.id, name = this.name)
+        val kindergardenDtos = this.kindergardens.map { kindergarden ->
+            kindergarden.toDto()
+        }
+        customerDto.kindergarden.addAll(kindergardenDtos)
+        return customerDto
+    }
 
 }
