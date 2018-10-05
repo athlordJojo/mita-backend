@@ -4,22 +4,26 @@ import com.jachouni.mitabackend.CustomerDto
 import com.jachouni.mitabackend.entities.Customer
 import com.jachouni.mitabackend.repositories.CustomerRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.rest.webmvc.RepositoryRestController
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
-@RepositoryRestController
-class CustomerController() {
+@RestController
+class CustomerController {
     @Autowired
     lateinit var customerRepository: CustomerRepository
 
 
-    @PostMapping(value = ["/customer"])
+    @PostMapping(value = ["/customers"])
     @ResponseBody
-    fun createCustomer(@RequestBody dto: CustomerDto): Customer {
-        val c = Customer(null, dto.name)
+    fun createCustomer(@RequestBody entity: CustomerDto): ResponseEntity<Customer> {
+        val c = Customer(null, entity.name)
         customerRepository.save(c)
-        return c
+        return ResponseEntity.ok(c)
+    }
+
+    @GetMapping(value = ["/customers"])
+    @ResponseBody
+    fun getAllCustomer(): List<Customer> {
+        return customerRepository.findAll().toList()
     }
 }
