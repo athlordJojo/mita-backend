@@ -8,7 +8,7 @@ import javax.persistence.*
 data class Customer(
         val name: String) {
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", orphanRemoval = true, fetch = FetchType.LAZY)
     val kindergardens: MutableList<Kindergarden> = mutableListOf()
 
     @Id

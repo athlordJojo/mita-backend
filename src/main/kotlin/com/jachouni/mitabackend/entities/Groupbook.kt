@@ -12,7 +12,7 @@ data class Groupbook(val name: String,
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "groupbook")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "groupbook", cascade = [CascadeType.ALL])
     var days: List<Day> = mutableListOf()
 }
 
@@ -26,7 +26,7 @@ data class Day(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "day")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "day", cascade = [CascadeType.ALL])
     var entries: List<DayEntry> = mutableListOf()
 }
 

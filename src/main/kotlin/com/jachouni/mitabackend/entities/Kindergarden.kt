@@ -14,11 +14,11 @@ data class Kindergarden(
     var id: UUID? = null
 
     @OneToOne(mappedBy = "group", cascade = [CascadeType.ALL],
-            fetch = FetchType.LAZY, optional = false)
+            fetch = FetchType.LAZY, optional = false,  orphanRemoval = true)
     val groupbook: Groupbook? = null
 
 
-    @OneToMany(mappedBy = "kindergarden", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(mappedBy = "kindergarden", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     val kindergardenGroups: MutableList<KindergardenGroup> = mutableListOf()
 }
 

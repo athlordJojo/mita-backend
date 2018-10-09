@@ -13,6 +13,6 @@ data class KindergardenGroup(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null
 
-    @OneToMany(mappedBy = "kindergardenGroup")
+    @OneToMany(mappedBy = "kindergardenGroup", orphanRemoval = true, fetch = FetchType.LAZY)
     val childs: MutableList<Child> = mutableListOf()
 }
