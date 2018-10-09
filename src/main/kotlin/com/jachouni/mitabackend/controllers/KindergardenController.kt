@@ -11,15 +11,13 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-class KindergardenController {
-    @Autowired
-    lateinit var kindergardenRepository: KindergardenRepository
+class KindergardenController(@Autowired
+                             var kindergardenRepository: KindergardenRepository,
+                             @Autowired
+                             var customerRepository: CustomerRepository
+) {
 
-    @Autowired
-    lateinit var customerRepository: CustomerRepository
-
-
-    @PostMapping(value = ["/customer/{customer-id}/kindergarden"])
+    @PostMapping(value = ["/customers/{customer-id}/kindergardens"])
     @ResponseBody
     fun createKindergarden(@PathVariable("customer-id") id: UUID, @RequestBody dto: KindergardenDto): ResponseEntity<Kindergarden> {
         val customer = customerRepository.findById(id).get()
@@ -27,5 +25,10 @@ class KindergardenController {
         kindergardenRepository.save(kindergarden)
         return ResponseEntity(kindergarden, HttpStatus.CREATED)
     }
+
+    fun getKindergardens() {
+
+    }
+
 
 }

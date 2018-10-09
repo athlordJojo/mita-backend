@@ -6,21 +6,17 @@ import javax.persistence.*
 
 @Entity
 data class Customer(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: UUID? = null,
         val name: String) {
 
     @OneToMany(mappedBy = "customer")
     val kindergardens: MutableList<Kindergarden> = mutableListOf()
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var id: UUID? = null
+
     fun toDto(): CustomerDto? {
-        val customerDto = CustomerDto(id = this.id, name = this.name)
-        val kindergardenDtos = this.kindergardens.map { kindergarden ->
-            kindergarden.toDto()
-        }
-        customerDto.kindergarden.addAll(kindergardenDtos)
-        return customerDto
+        return CustomerDto(id = this.id, name = this.name)
     }
 
 }

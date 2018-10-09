@@ -8,15 +8,14 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class CustomerController {
-    @Autowired
-    lateinit var customerRepository: CustomerRepository
+class CustomerController(@Autowired
+                         var customerRepository: CustomerRepository) {
 
 
     @PostMapping(value = ["/customers"])
     @ResponseBody
     fun createCustomer(@RequestBody entity: CustomerDto): ResponseEntity<Customer> {
-        val c = Customer(null, entity.name)
+        val c = Customer(entity.name)
         customerRepository.save(c)
         return ResponseEntity.ok(c)
     }
