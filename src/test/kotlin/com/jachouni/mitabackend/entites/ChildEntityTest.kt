@@ -42,6 +42,7 @@ class ChildEntityTest:BaseTest() {
         childRepository!!.save(child2)
 
         Assert.assertEquals(2L, childRepository!!.count())
+        childRepository!!.findById(child1.id!!)
 
     }
 }

@@ -11,7 +11,7 @@ data class Child(val firstname: String,
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: UUID? = null
+    val id: UUID? = null
 
     @OneToMany
     val dayEntries: List<DayEntry> = mutableListOf()
