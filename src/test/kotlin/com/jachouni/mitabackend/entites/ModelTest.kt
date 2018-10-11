@@ -1,32 +1,24 @@
-package com.jachouni.mitabackend
+package com.jachouni.mitabackend.entites
 
+import com.jachouni.mitabackend.Sex
 import com.jachouni.mitabackend.entities.*
 import com.jachouni.mitabackend.repositories.*
 import org.ajbrown.namemachine.Gender
 import org.ajbrown.namemachine.NameGenerator
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.junit.Assert.*
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.ApplicationArguments
-import org.springframework.boot.ApplicationRunner
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.stereotype.Component
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.test.context.junit4.SpringRunner
 import java.time.LocalDate
 
 
-@SpringBootApplication
-class MitaBackendApplication() {
+@RunWith(SpringRunner::class)
+@DataJpaTest
+class ModelTest {
 
-}
-
-fun main(args: Array<String>) {
-    runApplication<MitaBackendApplication>(*args)
-}
-
-@Component
-class DataCreator : ApplicationRunner {
-    var logger: Logger = LoggerFactory.getLogger(DataCreator::class.java)
+    val generator = NameGenerator()
 
     @Autowired
     lateinit var kindergardenRepository: KindergardenRepository
@@ -46,11 +38,8 @@ class DataCreator : ApplicationRunner {
     @Autowired
     lateinit var dayRepository: DayRepository
 
-
-
-    override fun run(args: ApplicationArguments?) {
-
-        val generator = NameGenerator()
+    @Test
+    fun roundTrip(){
         val customer = Customer("Bürgerhaus")
 
         val kindergardens = 10
@@ -82,6 +71,11 @@ class DataCreator : ApplicationRunner {
         }
 
         customerRepository.save(customer)
-        logger.info("Created ${kindergardenRepository.count()} kindergardens and ${kindergardenGroupRepository.count()} groups and ${groupbookRepository.count()} groupbooks and ${childRepository.count()} childs and ${dayRepository.count()} days" )
+
+        assertEquals(kindergardens, kindergardenRepository.count().toInt())
+        assertEquals(kindergardens * groupsPerKindergarden, kindergardenGroupRepository.count().toInt())
+        assertEquals(kindergardens * groupsPerKindergarden, groupbookRepository.count().toInt())
+        assertEquals(kindergardens * groupsPerKindergarden * childsPerGroup, childRepository.count().toInt())
+        assertEquals(kindergardens * groupsPerKindergarden * daysPerGroupbook, dayRepository.count().toInt())
     }
 }
