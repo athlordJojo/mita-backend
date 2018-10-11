@@ -5,6 +5,7 @@ import javax.persistence.*
 
 @Entity
 data class Kindergarden(
+        @Column(nullable = false)
         val name: String,
         @ManyToOne(optional = false)
         var customer: Customer
@@ -13,12 +14,15 @@ data class Kindergarden(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null
 
-    @OneToOne(mappedBy = "group", cascade = [CascadeType.ALL],
-            fetch = FetchType.LAZY, optional = false,  orphanRemoval = true)
-    val groupbook: Groupbook? = null
-
-
     @OneToMany(mappedBy = "kindergarden", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     val kindergardenGroups: MutableList<KindergardenGroup> = mutableListOf()
+
+    fun addKindergardenGroup(kindergardenGroup: KindergardenGroup) {
+        kindergardenGroups.add(kindergardenGroup)
+    }
+
+    fun removeKindergardenGroup(kindergardenGroup: KindergardenGroup) {
+        kindergardenGroups.remove(kindergardenGroup)
+    }
 }
 

@@ -46,33 +46,20 @@ class DataCreator : ApplicationRunner {
     override fun run(args: ApplicationArguments?) {
 
         val customer = Customer("Bürgerhaus")
-        customerRepository.save(customer)
 
-        val kindergardens = mutableListOf<Kindergarden>()
         for (i in 1..10) {
-            kindergardens.add(Kindergarden("Kita $i", customer))
-
+            customer.addKindergarden(Kindergarden("Kita $i", customer))
         }
-        kindergardenRepository.saveAll(kindergardens)
 
-
-        val groups = mutableListOf<KindergardenGroup>()
-
-        kindergardens.forEach {
+        customer.kindergardens.forEach {
             for (i in 1..10) {
-                groups.add(KindergardenGroup(name = "Group $i of kindergarden: ${it.name}", kindergarden = it))
+                val groupbook = Groupbook(name = "Groupbook of Group $i of kindergarden: ${it.name}")
+                val group = KindergardenGroup(name = "Group $i of kindergarden: ${it.name}", kindergarden = it, groupbook = groupbook)
+                it.addKindergardenGroup(group)
             }
         }
 
-        kindergardenGroupRepository.saveAll(groups)
-
-
-        val groupbooks = mutableListOf<Groupbook>()
-        groups.forEach {
-            groupbooks.add(Groupbook(name = "Groupbook of group: ${it.name}", group = it))
-        }
-
-        groupbookRepository.saveAll(groupbooks)
+        customerRepository.save(customer)
         logger.info("Created ${kindergardenRepository.count()} kindergardens and ${kindergardenGroupRepository.count()} groups and ${groupbookRepository.count()} groupbooks")
     }
 }

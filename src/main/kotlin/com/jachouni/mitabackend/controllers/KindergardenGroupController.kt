@@ -1,6 +1,7 @@
 package com.jachouni.mitabackend.controllers
 
 import com.jachouni.mitabackend.KindergardenGroupDto
+import com.jachouni.mitabackend.entities.Groupbook
 import com.jachouni.mitabackend.entities.KindergardenGroup
 import com.jachouni.mitabackend.repositories.CustomerRepository
 import com.jachouni.mitabackend.repositories.KindergardenGroupRepository
@@ -32,7 +33,8 @@ class KindergardenGroupController {
         checkCustomer(customerId)
         val kindergarden = kindergardenRepository.findById(kindergardenId)
         if (kindergarden.isPresent) {
-            kindergardenGroupRepository.save(KindergardenGroup(name = dto.name, kindergarden = kindergarden.get()))
+            val k = kindergarden.get()
+            k.addKindergardenGroup(KindergardenGroup(name = dto.name, kindergarden = k, groupbook = Groupbook("Groubbook of group ${k.name}")))
         } else {
             throw EntityNotFoundException("Could not find kindergarden with id: $kindergardenId")
         }
@@ -46,7 +48,7 @@ class KindergardenGroupController {
 
     @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroup"])
     @ResponseBody
-    fun getKindergardenGroups(@PathVariable("customer-id") customerId: UUID, @PathVariable("kindergarden-id") kindergardenId: UUID):ResponseEntity<List<KindergardenGroupDto>> {
+    fun getKindergardenGroups(@PathVariable("customer-id") customerId: UUID, @PathVariable("kindergarden-id") kindergardenId: UUID): ResponseEntity<List<KindergardenGroupDto>> {
         checkCustomer(customerId)
         val dtos = kindergardenGroupRepository.findAll().toMutableList().map { KindergardenGroupDto(id = it.id, name = it.name) }.toList()
         return ResponseEntity(dtos, HttpStatus.CREATED)
