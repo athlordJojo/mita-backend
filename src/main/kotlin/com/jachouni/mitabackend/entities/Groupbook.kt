@@ -43,6 +43,14 @@ data class Day(
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "day", cascade = [CascadeType.ALL])
     var entries: MutableList<DayEntry> = mutableListOf()
+
+    fun addDayEntry(entry:DayEntry){
+        entries.add(entry)
+    }
+
+    fun removeDayEntry(entry:DayEntry){
+        entries.remove(entry)
+    }
 }
 
 @Entity
@@ -56,10 +64,10 @@ data class DayEntry(
         val child: Child,
 
         @Column(nullable = true)
-        var arrivedAt: LocalTime,
+        var arrivedAt: LocalTime? = null,
 
         @Column(nullable = true)
-        var leftAt: LocalTime
+        var leftAt: LocalTime? = null
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

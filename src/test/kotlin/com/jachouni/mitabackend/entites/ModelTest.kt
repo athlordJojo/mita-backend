@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.junit4.SpringRunner
 import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
 
 
 @RunWith(SpringRunner::class)
@@ -38,8 +40,13 @@ class ModelTest {
     @Autowired
     lateinit var dayRepository: DayRepository
 
+    @Autowired
+    lateinit var entryRepository: DayEntryRepository
+
     @Test
     fun roundTrip(){
+        val generator = NameGenerator()
+        val random = Random()
         val customer = Customer("Bürgerhaus")
 
         val kindergardens = 10
@@ -64,8 +71,17 @@ class ModelTest {
                 for (j in 1..childsPerGroup) {
                     val name = generator.generateName()
                     val sex: Sex = if (name.gender == Gender.MALE) Sex.MALE else Sex.FEMALE
-                    group.addChild(Child(name.firstName, name.lastName, LocalDate.now(), sex, group))
+                    val child = Child(name.firstName, name.lastName, LocalDate.now(), sex, group)
+                    group.addChild(child)
 
+                    for (day in groupbook.days) {
+                        val arrivedAt: LocalTime? = if (random.nextInt() % 2 == 0) LocalTime.now().minusHours(random.nextInt(24).toLong()) else null
+                        var leftAt: LocalTime? = null
+                        if (arrivedAt != null) {
+                            leftAt = if (random.nextInt() % 2 == 0) arrivedAt.plusHours(random.nextInt(8).toLong()) else null
+                        }
+                        day.addDayEntry(DayEntry(day, child, arrivedAt, leftAt))
+                    }
                 }
             }
         }
