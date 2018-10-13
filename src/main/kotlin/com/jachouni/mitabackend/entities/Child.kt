@@ -8,14 +8,14 @@ import javax.persistence.*
 @Entity
 data class Child(
         @Column(nullable = false)
-        val firstname: String,
+        var firstname: String,
         @Column(nullable = false)
-        val lastname: String,
+        var lastname: String,
         @Column(nullable = false)
-        val birthday: LocalDate,
+        var birthday: LocalDate,
         @Enumerated
         @Column
-        val sex:Sex,
+        var sex:Sex,
         @ManyToOne(optional = false)
         val kindergardenGroup: KindergardenGroup
 ) {
@@ -23,7 +23,7 @@ data class Child(
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: UUID? = null
 
-    val isOnVacation: Boolean = false
+    var isOnVacation: Boolean = false
 
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "child")
     val dayEntries: MutableList<DayEntry> = mutableListOf()

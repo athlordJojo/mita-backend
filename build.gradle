@@ -15,12 +15,12 @@ buildscript {
 }
 
 apply plugin: 'kotlin'
+apply plugin: 'kotlin-noarg'
 apply plugin: 'kotlin-spring'
 apply plugin: 'kotlin-jpa'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'kotlin-noarg'
 
 group = 'com.jachouni'
 version = '0.0.1'
@@ -54,6 +54,7 @@ dependencies {
     // https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
     implementation 'org.ajbrown:name-machine:1.0.0'
+    implementation 'org.modelmapper:modelmapper:2.3.0'
     runtimeOnly('com.h2database:h2')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
@@ -63,4 +64,9 @@ allOpen {
     annotation("javax.persistence.Entity")
     annotation("javax.persistence.MappedSuperclass")
     annotation("javax.persistence.Embeddable")
+}
+
+noArg {
+    // Annotation to create default constructor for ModelMapper: https://stackoverflow.com/questions/39199426/better-way-to-map-kotlin-data-objects-to-data-objects/51640371#51640371
+    annotation("com.jachouni.mitabackend.DtoAnnotation")
 }

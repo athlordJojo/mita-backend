@@ -1,5 +1,6 @@
 package com.jachouni.mitabackend.entites
 
+import com.jachouni.mitabackend.CustomerDto
 import com.jachouni.mitabackend.Sex
 import com.jachouni.mitabackend.entities.*
 import com.jachouni.mitabackend.repositories.*
@@ -8,6 +9,8 @@ import org.ajbrown.namemachine.NameGenerator
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.modelmapper.ModelMapper
+import org.modelmapper.convention.MatchingStrategies
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.junit4.SpringRunner
@@ -49,9 +52,9 @@ class ModelTest {
         val random = Random()
         val customer = Customer("Bürgerhaus")
 
-        val kindergardens = 10
-        val groupsPerKindergarden = 10
-        val childsPerGroup = 10
+        val kindergardens = 1
+        val groupsPerKindergarden = 1
+        val childsPerGroup = 1
         val daysPerGroupbook = 2
 
         for (i in 1..kindergardens) {
@@ -89,6 +92,13 @@ class ModelTest {
         customerRepository.save(customer)
 
         assertEquals(kindergardens, kindergardenRepository.count().toInt())
+
+        val c1 = customerRepository.findById(customer.id!!).orElseThrow()
+
+        val modelMapper = ModelMapper()
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        val dto = modelMapper.map(c1, CustomerDto::class.java)
+
         assertEquals(kindergardens * groupsPerKindergarden, kindergardenGroupRepository.count().toInt())
         assertEquals(kindergardens * groupsPerKindergarden, groupbookRepository.count().toInt())
         assertEquals(kindergardens * groupsPerKindergarden * childsPerGroup, childRepository.count().toInt())

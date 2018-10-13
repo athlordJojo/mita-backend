@@ -8,7 +8,7 @@ import javax.persistence.*
 @Entity
 data class Groupbook(
         @Column(nullable = false)
-        val name: String
+        var name: String
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,7 @@ data class Groupbook(
 @Entity
 data class Day(
         @Column(nullable = false)
-        val date: LocalDate,
+        var date: LocalDate,
         @ManyToOne
         val groupbook: Groupbook
 ) {

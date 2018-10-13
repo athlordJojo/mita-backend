@@ -4,6 +4,8 @@ import com.jachouni.mitabackend.KindergardenDto
 import com.jachouni.mitabackend.entities.Kindergarden
 import com.jachouni.mitabackend.repositories.CustomerRepository
 import com.jachouni.mitabackend.repositories.KindergardenRepository
+import com.jachouni.mitabackend.services.KindergardenService
+import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -12,22 +14,27 @@ import java.util.*
 
 @RestController
 class KindergardenController(@Autowired
-                             var kindergardenRepository: KindergardenRepository,
-                             @Autowired
-                             var customerRepository: CustomerRepository
+                             var kindergardenService: KindergardenService
 ) {
 
     @PostMapping(value = ["/customers/{customer-id}/kindergardens"])
     @ResponseBody
-    fun createKindergarden(@PathVariable("customer-id") id: UUID, @RequestBody dto: KindergardenDto): ResponseEntity<Kindergarden> {
-        val customer = customerRepository.findById(id).get()
-        val kindergarden = Kindergarden(name = dto.name, customer = customer)
-        kindergardenRepository.save(kindergarden)
+    fun createKindergarden(@PathVariable("customer-id") customerId: UUID, @RequestBody dto: KindergardenDto): ResponseEntity<Kindergarden> {
+        val modelMapper = ModelMapper()
+        val kindergarden = modelMapper.map(dto, Kindergarden::class.java)
+        kindergardenService.createKindergarden(customerId, kindergarden)
         return ResponseEntity(kindergarden, HttpStatus.CREATED)
     }
 
-    fun getKindergardens() {
 
+    @GetMapping(value = ["/customers/{customer-id}/kindergardens"])
+    @ResponseBody
+    fun getKindergardens(@PathVariable("customer-id") customerId: UUID): ResponseEntity<List<KindergardenDto>> {
+        val modelMapper = ModelMapper()
+        val kinderGardens = kindergardenService.getAllKinderGardens(customerId)
+        val dto = kinderGardens.map { kindergarden -> modelMapper.map(kindergarden, KindergardenDto::class.java) }
+
+        return ResponseEntity(dto, HttpStatus.OK)
     }
 
 

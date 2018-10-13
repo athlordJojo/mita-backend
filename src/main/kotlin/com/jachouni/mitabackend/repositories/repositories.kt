@@ -6,7 +6,9 @@ import java.util.*
 
 interface CustomerRepository : PagingAndSortingRepository<Customer, UUID>
 
-interface KindergardenRepository : PagingAndSortingRepository<Kindergarden, UUID>
+interface KindergardenRepository : PagingAndSortingRepository<Kindergarden, UUID> {
+    fun findByCustomer(customer: Customer): List<Kindergarden>
+}
 
 interface KindergardenGroupRepository : PagingAndSortingRepository<KindergardenGroup, UUID>
 

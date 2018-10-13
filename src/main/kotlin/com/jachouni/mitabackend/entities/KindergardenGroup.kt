@@ -8,9 +8,9 @@ import javax.persistence.FetchType
 @Entity
 data class KindergardenGroup(
         @Column(nullable = false)
-        val name: String,
+        var name: String,
         @ManyToOne(optional = false)
-        var kindergarden: Kindergarden,
+        var  kindergarden: Kindergarden,
         @OneToOne(mappedBy = "group", cascade = [CascadeType.ALL],
                 fetch = FetchType.LAZY)
         val groupbook: Groupbook

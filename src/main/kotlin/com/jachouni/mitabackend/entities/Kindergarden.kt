@@ -6,7 +6,7 @@ import javax.persistence.*
 @Entity
 data class Kindergarden(
         @Column(nullable = false)
-        val name: String,
+        var name: String,
         @ManyToOne(optional = false)
         var customer: Customer
 ) {
