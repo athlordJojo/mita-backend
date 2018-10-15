@@ -6,9 +6,7 @@ import javax.persistence.FetchType
 
 
 @Entity
-@NamedQueries(value = [NamedQuery(name = "KindergardenGroup.findByCustomerIdAndKindergardenId", query = "Select kg from KindergardenGroup ")]
-
-
+@NamedQueries(value = [NamedQuery(name = "KindergardenGroup.findByCustomerIdAndKindergardenId", query = "SELECT kg FROM KindergardenGroup kg WHERE kg.kindergarden.id = :kindergardenId AND kg.kindergarden.customer.id = :customerId")]
 )
 @Table(name = "kindergardengroup")
 data class KindergardenGroup(

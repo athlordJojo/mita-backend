@@ -8,7 +8,7 @@ import javax.persistence.*
 @Entity
 data class Groupbook(
         @Column(nullable = false)
-        var name: String
+        val name: String
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,15 +31,17 @@ data class Groupbook(
 }
 
 @Entity
+@Table(uniqueConstraints = [UniqueConstraint(columnNames = ["date", "groupbook_id"])])
 data class Day(
-        @Column(nullable = false)
-        var date: LocalDate,
+        @Column(nullable = false, name = "date")
+        val date: LocalDate,
         @ManyToOne
+        @JoinColumn(name = "groupbook_id")
         val groupbook: Groupbook
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: UUID? = null
+    var id: Long? = null
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "day", cascade = [CascadeType.ALL])
     var entries: MutableList<DayEntry> = mutableListOf()
@@ -58,9 +60,11 @@ data class Day(
 data class DayEntry(
 
         @ManyToOne(optional = false)
+        @JoinColumn(name = "day_id")
         val day: Day,
 
         @ManyToOne(optional = false)
+        @JoinColumn(name = "child_id")
         val child: Child,
 
         @Column(nullable = true)

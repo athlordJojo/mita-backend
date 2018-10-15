@@ -2,8 +2,6 @@ package com.jachouni.mitabackend.controllers
 
 import com.jachouni.mitabackend.KindergardenDto
 import com.jachouni.mitabackend.entities.Kindergarden
-import com.jachouni.mitabackend.repositories.CustomerRepository
-import com.jachouni.mitabackend.repositories.KindergardenRepository
 import com.jachouni.mitabackend.services.KindergardenService
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,6 +1,5 @@
 package com.jachouni.mitabackend.entities
 
-import com.jachouni.mitabackend.Sex
 import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
@@ -15,7 +14,7 @@ data class Child(
         var birthday: LocalDate,
         @Enumerated
         @Column
-        var sex:Sex,
+        var sex: Sex,
         @ManyToOne(optional = false)
         val kindergardenGroup: KindergardenGroup
 ) {

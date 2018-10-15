@@ -3,9 +3,9 @@ package com.jachouni.mitabackend.controllers
 import com.jachouni.mitabackend.KindergardenGroupDto
 import com.jachouni.mitabackend.entities.Groupbook
 import com.jachouni.mitabackend.entities.KindergardenGroup
-import com.jachouni.mitabackend.repositories.CustomerRepository
-import com.jachouni.mitabackend.repositories.KindergardenGroupRepository
-import com.jachouni.mitabackend.repositories.KindergardenRepository
+import com.jachouni.mitabackend.entities.repositories.CustomerRepository
+import com.jachouni.mitabackend.entities.repositories.KindergardenGroupRepository
+import com.jachouni.mitabackend.entities.repositories.KindergardenRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

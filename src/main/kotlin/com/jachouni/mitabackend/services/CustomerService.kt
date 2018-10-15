@@ -1,7 +1,7 @@
 package com.jachouni.mitabackend.services
 
 import com.jachouni.mitabackend.entities.Customer
-import com.jachouni.mitabackend.repositories.CustomerRepository
+import com.jachouni.mitabackend.entities.repositories.CustomerRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
