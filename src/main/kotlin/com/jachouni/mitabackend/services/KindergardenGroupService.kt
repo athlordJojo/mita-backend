@@ -1,13 +1,28 @@
 package com.jachouni.mitabackend.services
 
+import com.jachouni.mitabackend.entities.KindergardenGroup
 import com.jachouni.mitabackend.entities.repositories.KindergardenGroupRepository
+import com.jachouni.mitabackend.entities.repositories.KindergardenRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class KindergardenGroupService(val kindergardenGroupRepository: KindergardenGroupRepository) {
+class KindergardenGroupService(
+        @Autowired
+        val kindergardenGroupRepository: KindergardenGroupRepository,
+        @Autowired
+        val kindergardenRepository: KindergardenRepository
+) {
 
-    fun getAllKindergarden(customerId: UUID, kindergardenId: UUID) {
-        kindergardenGroupRepository.findByCustomerIdAndKindergardenId(customerId, kindergardenId)
+    fun createKindergardenGroup(customerId: UUID, kindergardenId: UUID, kindergardenGroup: KindergardenGroup): KindergardenGroup {
+        val kindergarden = kindergardenRepository.findByIdAndCustomer_id(kindergardenId = kindergardenId, customerId = customerId)
+        kindergarden.addKindergardenGroup(kindergardenGroup)
+        kindergardenRepository.save(kindergarden)
+        return kindergardenGroup
+    }
+
+    fun getAllKindergarden(customerId: UUID, kindergardenId: UUID): List<KindergardenGroup> {
+        return kindergardenGroupRepository.findAllByCustomerIdAndKindergardenId(customerId, kindergardenId)
     }
 }

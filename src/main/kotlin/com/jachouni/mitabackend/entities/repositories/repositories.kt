@@ -8,11 +8,12 @@ import java.util.*
 interface CustomerRepository : PagingAndSortingRepository<Customer, UUID>
 
 interface KindergardenRepository : PagingAndSortingRepository<Kindergarden, UUID> {
-    fun findByCustomer(customer: Customer): List<Kindergarden>
+    fun findByIdAndCustomer_id(kindergardenId: UUID, customerId: UUID): Kindergarden
+    fun findAllByCustomer(customer: Customer): List<Kindergarden>
 }
 
 interface KindergardenGroupRepository : PagingAndSortingRepository<KindergardenGroup, UUID> {
-    fun findByCustomerIdAndKindergardenId(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID): List<KindergardenGroup>
+    fun findAllByCustomerIdAndKindergardenId(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID): List<KindergardenGroup>
 }
 
 interface GroupbookRepository : PagingAndSortingRepository<Groupbook, UUID>

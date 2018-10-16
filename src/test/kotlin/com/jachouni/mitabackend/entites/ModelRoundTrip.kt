@@ -15,4 +15,12 @@ class ModelRoundTrip: ModelBaseTest() {
         assertEquals(kindergardens * groupsPerKindergarden * daysPerGroupbook, dayRepository.count().toInt())
         assertEquals(kindergardens * groupsPerKindergarden * daysPerGroupbook * childsPerGroup, dayEntryRepository.count().toInt())
     }
+
+    @Test
+    fun kindergarden_test(){
+        val customer = getCustomer()
+        val kindergarden = customer.kindergardens[0]
+        val returnedKindergarden = kindergardenRepository.findByIdAndCustomer_id(kindergarden.id!!, customer.id!!)
+        print("")
+    }
 }

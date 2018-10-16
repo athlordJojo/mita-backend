@@ -24,7 +24,7 @@ class KindergardenService(
 
     fun getAllKinderGardens(customerId: UUID): List<Kindergarden> {
         val customer = customerRepository.findById(customerId).orElseThrow()
-        return kindergardenRepository.findByCustomer(customer)
+        return kindergardenRepository.findAllByCustomer(customer)
     }
 
 }
