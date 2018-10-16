@@ -4,6 +4,10 @@ import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
 
+@NamedQueries(value = [
+    NamedQuery(name = "Child.getChildsByCustomerIdAndKindergardenIdAndGroupId", query = "SELECT c FROM Child c WHERE c.kindergardenGroup.id = :kindergardenGroupId AND c.kindergardenGroup.kindergarden.id = :kindergardenId AND c.kindergardenGroup.kindergarden.customer.id = :customerId")
+]
+)
 @Entity
 data class Child(
         @Column(nullable = false)

@@ -3,13 +3,16 @@ package com.jachouni.mitabackend
 import java.util.*
 
 @DtoAnnotation
-data class CustomerDto (var id: UUID? = null, var name: String)
+data class CustomerDto(var id: UUID? = null, var name: String)
 
 @DtoAnnotation
 data class KindergardenDto(var id: UUID? = null, var name: String)
 
 @DtoAnnotation
 data class KindergardenGroupDto(var id: UUID? = null, var name: String)
+
+@DtoAnnotation
+data class ChildDto(var id: UUID? = null, var firstname: String, var lastname: String)
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

@@ -14,6 +14,7 @@ interface KindergardenRepository : PagingAndSortingRepository<Kindergarden, UUID
 
 interface KindergardenGroupRepository : PagingAndSortingRepository<KindergardenGroup, UUID> {
     fun findAllByCustomerIdAndKindergardenId(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID): List<KindergardenGroup>
+    fun findByIdAndCustomerIdAndKindergardenId(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID, @Param("id") id: UUID): KindergardenGroup
 }
 
 interface GroupbookRepository : PagingAndSortingRepository<Groupbook, UUID>
@@ -22,7 +23,11 @@ interface DayRepository : PagingAndSortingRepository<Day, UUID>
 
 interface DayEntryRepository : PagingAndSortingRepository<DayEntry, UUID>
 
-interface ChildRepository : PagingAndSortingRepository<Child, UUID>
+interface ChildRepository : PagingAndSortingRepository<Child, UUID> {
+    fun getChildsByCustomerIdAndKindergardenIdAndGroupId(@Param("customerId") customerId: UUID,
+                                                         @Param("kindergardenId") kindergardenId: UUID,
+                                                         @Param("kindergardenGroupId") kindergardenGroupId: UUID): List<Child>
+}
 
 
 

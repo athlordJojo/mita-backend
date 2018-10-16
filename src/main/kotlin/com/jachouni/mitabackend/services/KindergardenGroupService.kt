@@ -22,7 +22,11 @@ class KindergardenGroupService(
         return kindergardenGroup
     }
 
-    fun getAllKindergarden(customerId: UUID, kindergardenId: UUID): List<KindergardenGroup> {
+    fun getAllKindergardenGroups(customerId: UUID, kindergardenId: UUID): List<KindergardenGroup> {
         return kindergardenGroupRepository.findAllByCustomerIdAndKindergardenId(customerId, kindergardenId)
+    }
+
+    fun getKindergardenGroup(customerId: UUID, kindergardenId: UUID, id: UUID): KindergardenGroup {
+        return kindergardenGroupRepository.findByIdAndCustomerIdAndKindergardenId(customerId, kindergardenId, id)
     }
 }

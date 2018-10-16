@@ -6,7 +6,10 @@ import javax.persistence.FetchType
 
 
 @Entity
-@NamedQueries(value = [NamedQuery(name = "KindergardenGroup.findAllByCustomerIdAndKindergardenId", query = "SELECT kg FROM KindergardenGroup kg WHERE kg.kindergarden.id = :kindergardenId AND kg.kindergarden.customer.id = :customerId")]
+@NamedQueries(value = [
+    NamedQuery(name = "KindergardenGroup.findAllByCustomerIdAndKindergardenId", query = "SELECT kg FROM KindergardenGroup kg WHERE kg.kindergarden.id = :kindergardenId AND kg.kindergarden.customer.id = :customerId"),
+    NamedQuery(name = "KindergardenGroup.findByIdAndCustomerIdAndKindergardenId", query = "SELECT kg FROM KindergardenGroup kg WHERE kg.id = :id AND kg.kindergarden.id = :kindergardenId AND kg.kindergarden.customer.id = :customerId")
+]
 )
 @Table(name = "kindergardengroup")
 data class KindergardenGroup(

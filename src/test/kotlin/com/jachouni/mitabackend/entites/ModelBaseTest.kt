@@ -41,7 +41,7 @@ abstract class ModelBaseTest {
 
     val kindergardens = 1
     val groupsPerKindergarden = 10
-    val childsPerGroup = 1
+    val childsPerGroup = 10
     val daysPerGroupbook = 2
 
 
