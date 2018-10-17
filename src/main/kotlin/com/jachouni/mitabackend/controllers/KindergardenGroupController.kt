@@ -14,7 +14,7 @@ import java.util.*
 @RestController
 class KindergardenGroupController(@Autowired val kindergardenGroupService: KindergardenGroupService) {
 
-    @PostMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroup"])
+    @PostMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups"])
     @ResponseBody
     fun createKindergardenGroup(@PathVariable("customer-id") customerId: UUID,
                                 @PathVariable("kindergarden-id") kindergardenId: UUID,
@@ -26,7 +26,7 @@ class KindergardenGroupController(@Autowired val kindergardenGroupService: Kinde
         return ResponseEntity(modelMapper.map(updatedKindergardenGroup, KindergardenGroupDto::class.java), HttpStatus.OK)
     }
 
-    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroup"])
+    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups"])
     @ResponseBody
     fun getKindergardenGroups(@PathVariable("customer-id") customerId: UUID,
                               @PathVariable("kindergarden-id") kindergardenId: UUID): ResponseEntity<List<KindergardenGroupDto>> {
@@ -35,7 +35,7 @@ class KindergardenGroupController(@Autowired val kindergardenGroupService: Kinde
         return ResponseEntity(dtos, HttpStatus.OK)
     }
 
-    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroup/{groupId}"])
+    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{groupId}"])
     @ResponseBody
     fun getKindergardenGroup(@PathVariable("customer-id") customerId: UUID,
                              @PathVariable("kindergarden-id") kindergardenId: UUID,

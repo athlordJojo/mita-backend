@@ -13,7 +13,7 @@ import java.util.*
 @RestController
 class ChildController(@Autowired val childService: ChildService) {
 
-    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroup/{groupId}/childs"])
+    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{groupId}/childs"])
     @ResponseBody
     fun getChilds(@PathVariable("customer-id") customerId: UUID,
                   @PathVariable("kindergarden-id") kindergardenId: UUID,
@@ -24,7 +24,7 @@ class ChildController(@Autowired val childService: ChildService) {
         return ResponseEntity(dtos, HttpStatus.OK)
     }
 
-    @PostMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroup/{groupId}/childs"])
+    @PostMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{groupId}/childs"])
     @ResponseBody
     fun createChild(@PathVariable("customer-id") customerId: UUID,
                     @PathVariable("kindergarden-id") kindergardenId: UUID,
