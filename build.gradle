@@ -56,6 +56,9 @@ dependencies {
     implementation 'org.ajbrown:name-machine:1.0.0'
     implementation 'org.modelmapper:modelmapper:2.3.0'
     runtimeOnly('com.h2database:h2')
+
+    compile "com.fasterxml.jackson.core:jackson-databind:2.8.5"
+    runtime "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5"
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
