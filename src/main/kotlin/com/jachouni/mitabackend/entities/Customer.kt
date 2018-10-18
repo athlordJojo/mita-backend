@@ -18,6 +18,7 @@ data class Customer(
 
     fun addKindergarden(kindergarden: Kindergarden){
         kindergardens.add(kindergarden)
+        kindergarden.customer = this
     }
 
     fun removeKindergarden(kindergarden: Kindergarden){

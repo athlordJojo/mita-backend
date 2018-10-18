@@ -20,7 +20,7 @@ data class Child(
         @Column
         var sex: Sex,
         @ManyToOne(optional = false)
-        val kindergardenGroup: KindergardenGroup
+        var kindergardenGroup: KindergardenGroup
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

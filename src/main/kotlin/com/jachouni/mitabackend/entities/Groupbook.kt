@@ -23,6 +23,7 @@ data class Groupbook(
 
     fun addDay(day: Day) {
         days.add(day)
+        day.groupbook = this
     }
 
     fun removeDay(day: Day) {
@@ -37,7 +38,7 @@ data class Day(
         val date: LocalDate,
         @ManyToOne
         @JoinColumn(name = "groupbook_id")
-        val groupbook: Groupbook
+        var groupbook: Groupbook
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,6 +49,7 @@ data class Day(
 
     fun addDayEntry(entry:DayEntry){
         entries.add(entry)
+        entry.day = this
     }
 
     fun removeDayEntry(entry:DayEntry){
@@ -61,7 +63,7 @@ data class DayEntry(
 
         @ManyToOne(optional = false)
         @JoinColumn(name = "day_id")
-        val day: Day,
+        var day: Day,
 
         @ManyToOne(optional = false)
         @JoinColumn(name = "child_id")

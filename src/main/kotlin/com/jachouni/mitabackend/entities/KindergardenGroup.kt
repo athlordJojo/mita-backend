@@ -30,6 +30,7 @@ data class KindergardenGroup(
 
     fun addChild(child: Child) {
         childs.add(child)
+        child.kindergardenGroup = this
     }
 
     fun removeChild(child: Child) {
