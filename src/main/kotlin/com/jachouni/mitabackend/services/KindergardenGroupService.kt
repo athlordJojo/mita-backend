@@ -18,8 +18,7 @@ class KindergardenGroupService(
     fun createKindergardenGroup(customerId: UUID, kindergardenId: UUID, kindergardenGroup: KindergardenGroup): KindergardenGroup {
         val kindergarden = kindergardenRepository.findByIdAndCustomer_id(kindergardenId = kindergardenId, customerId = customerId)
         kindergarden.addKindergardenGroup(kindergardenGroup)
-        kindergardenRepository.save(kindergarden)
-        return kindergardenGroup
+        return kindergardenGroupRepository.save(kindergardenGroup)
     }
 
     fun getAllKindergardenGroups(customerId: UUID, kindergardenId: UUID): List<KindergardenGroup> {

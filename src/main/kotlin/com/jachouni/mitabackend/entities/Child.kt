@@ -5,7 +5,9 @@ import java.util.*
 import javax.persistence.*
 
 @NamedQueries(value = [
-    NamedQuery(name = "Child.getChildsByCustomerIdAndKindergardenIdAndGroupId", query = "SELECT c FROM Child c WHERE c.kindergardenGroup.id = :kindergardenGroupId AND c.kindergardenGroup.kindergarden.id = :kindergardenId AND c.kindergardenGroup.kindergarden.customer.id = :customerId")
+    NamedQuery(name = "Child.getChilds", query = "SELECT c FROM Child c WHERE c.kindergardenGroup.id = :kindergardenGroupId AND c.kindergardenGroup.kindergarden.id = :kindergardenId AND c.kindergardenGroup.kindergarden.customer.id = :customerId"),
+    NamedQuery(name = "Child.getChild", query = "SELECT c FROM Child c WHERE c.id = :childId AND c.kindergardenGroup.id = :kindergardenGroupId AND c.kindergardenGroup.kindergarden.id = :kindergardenId AND c.kindergardenGroup.kindergarden.customer.id = :customerId")
+
 ]
 )
 @Entity

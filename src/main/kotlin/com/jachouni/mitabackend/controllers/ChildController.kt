@@ -13,29 +13,42 @@ import java.util.*
 @RestController
 class ChildController(@Autowired val childService: ChildService) {
 
-    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{groupId}/childs"])
+    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{group-id}/childs"])
     @ResponseBody
     fun getChilds(@PathVariable("customer-id") customerId: UUID,
                   @PathVariable("kindergarden-id") kindergardenId: UUID,
-                  @PathVariable("groupId") kindergardenGroupId: UUID): ResponseEntity<List<ChildDto>> {
+                  @PathVariable("group-id") kindergardenGroupId: UUID): ResponseEntity<List<ChildDto>> {
         val childs = childService.getChildsOfGroup(customerId, kindergardenId, kindergardenGroupId)
         val modelMapper = ModelMapper()
         val dtos = childs.map { c -> modelMapper.map(c, ChildDto::class.java) }.toList()
-        return ResponseEntity(dtos, HttpStatus.OK)
+        return ResponseEntity.ok(dtos)
     }
 
-    @PostMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{groupId}/childs"])
+    @PostMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{group-id}/childs"])
     @ResponseBody
     fun createChild(@PathVariable("customer-id") customerId: UUID,
                     @PathVariable("kindergarden-id") kindergardenId: UUID,
-                    @PathVariable("groupId") kindergardenGroupId: UUID,
+                    @PathVariable("group-id") kindergardenGroupId: UUID,
                     @RequestBody childDto: ChildDto
     ): ResponseEntity<ChildDto> {
         val modelMapper = ModelMapper()
         val child = modelMapper.map(childDto, Child::class.java)
         childService.createChild(customerId, kindergardenId, kindergardenGroupId, child)
         val dto = modelMapper.map(child, ChildDto::class.java)
-        return ResponseEntity(dto, HttpStatus.OK)
+        return ResponseEntity(dto, HttpStatus.CREATED)
     }
 
+
+    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{group-id}/childs/{child-id}"])
+    @ResponseBody
+    fun getChild(@PathVariable("customer-id") customerId: UUID,
+                 @PathVariable("kindergarden-id") kindergardenId: UUID,
+                 @PathVariable("group-id") kindergardenGroupId: UUID,
+                 @PathVariable("child-Id") childId: UUID
+    ): ResponseEntity<ChildDto> {
+        val modelMapper = ModelMapper()
+        val child = childService.getChildOfGroup(customerId, kindergardenId, kindergardenGroupId, childId)
+        val dto = modelMapper.map(child, ChildDto::class.java)
+        return ResponseEntity.ok(dto)
+    }
 }

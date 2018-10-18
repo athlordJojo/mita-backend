@@ -17,14 +17,11 @@ class KindergardenService(
     fun createKindergarden(customerId: UUID, kindergarden: Kindergarden): Kindergarden {
         val customer = customerRepository.findById(customerId).orElseThrow()
         customer.addKindergarden(kindergarden)
-        customerRepository.save(customer)
-
-        return kindergarden
+        return kindergardenRepository.save(kindergarden)
     }
 
     fun getAllKinderGardens(customerId: UUID): List<Kindergarden> {
-        val customer = customerRepository.findById(customerId).orElseThrow()
-        return kindergardenRepository.findAllByCustomer(customer)
+        return kindergardenRepository.findAllByCustomer_id(customerId)
     }
 
 }

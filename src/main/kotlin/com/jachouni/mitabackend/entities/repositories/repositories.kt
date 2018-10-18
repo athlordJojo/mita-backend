@@ -1,32 +1,38 @@
 package com.jachouni.mitabackend.entities.repositories
 
 import com.jachouni.mitabackend.entities.*
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.data.repository.query.Param
 import java.util.*
 
-interface CustomerRepository : PagingAndSortingRepository<Customer, UUID>
+interface CustomerRepository : JpaRepository<Customer, UUID>
 
-interface KindergardenRepository : PagingAndSortingRepository<Kindergarden, UUID> {
+interface KindergardenRepository : JpaRepository<Kindergarden, UUID> {
     fun findByIdAndCustomer_id(kindergardenId: UUID, customerId: UUID): Kindergarden
-    fun findAllByCustomer(customer: Customer): List<Kindergarden>
+    fun findAllByCustomer_id(customerId: UUID): List<Kindergarden>
 }
 
-interface KindergardenGroupRepository : PagingAndSortingRepository<KindergardenGroup, UUID> {
+interface KindergardenGroupRepository : JpaRepository<KindergardenGroup, UUID> {
     fun findAllByCustomerIdAndKindergardenId(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID): List<KindergardenGroup>
     fun findByIdAndCustomerIdAndKindergardenId(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID, @Param("id") id: UUID): KindergardenGroup
 }
 
-interface GroupbookRepository : PagingAndSortingRepository<Groupbook, UUID>
+interface GroupbookRepository : JpaRepository<Groupbook, UUID>
 
-interface DayRepository : PagingAndSortingRepository<Day, UUID>
+interface DayRepository : JpaRepository<Day, UUID>
 
-interface DayEntryRepository : PagingAndSortingRepository<DayEntry, UUID>
+interface DayEntryRepository : JpaRepository<DayEntry, UUID>
 
-interface ChildRepository : PagingAndSortingRepository<Child, UUID> {
-    fun getChildsByCustomerIdAndKindergardenIdAndGroupId(@Param("customerId") customerId: UUID,
-                                                         @Param("kindergardenId") kindergardenId: UUID,
-                                                         @Param("kindergardenGroupId") kindergardenGroupId: UUID): List<Child>
+interface ChildRepository : JpaRepository<Child, UUID> {
+    fun getChilds(@Param("customerId") customerId: UUID,
+                  @Param("kindergardenId") kindergardenId: UUID,
+                  @Param("kindergardenGroupId") kindergardenGroupId: UUID): List<Child>
+
+    fun getChild(@Param("customerId") customerId: UUID,
+                 @Param("kindergardenId") kindergardenId: UUID,
+                 @Param("kindergardenGroupId") kindergardenGroupId: UUID,
+                 @Param("childId") childId: UUID): Child
 }
 
 

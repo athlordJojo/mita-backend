@@ -32,7 +32,7 @@ class KindergardenController(@Autowired
         val kinderGardens = kindergardenService.getAllKinderGardens(customerId)
         val dto = kinderGardens.map { kindergarden -> modelMapper.map(kindergarden, KindergardenDto::class.java) }
 
-        return ResponseEntity(dto, HttpStatus.OK)
+        return ResponseEntity.ok(dto)
     }
 
 

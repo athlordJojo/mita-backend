@@ -11,13 +11,16 @@ import java.util.*
 class ChildService(@Autowired val childRepository: ChildRepository,
                    @Autowired val kindergardenGroupRepository: KindergardenGroupRepository) {
     fun getChildsOfGroup(customerId: UUID, kindergardenId: UUID, kindergardenGroupId: UUID): List<Child> {
-        return childRepository.getChildsByCustomerIdAndKindergardenIdAndGroupId(customerId, kindergardenId, kindergardenGroupId)
+        return childRepository.getChilds(customerId, kindergardenId, kindergardenGroupId)
+    }
+
+    fun getChildOfGroup(customerId: UUID, kindergardenId: UUID, kindergardenGroupId: UUID, childId: UUID): Child {
+        return childRepository.getChild(customerId, kindergardenId, kindergardenGroupId, childId)
     }
 
     fun createChild(customerId: UUID, kindergardenId: UUID, kindergardenGroupId: UUID, child: Child): Child {
         val group = kindergardenGroupRepository.findByIdAndCustomerIdAndKindergardenId(customerId, kindergardenId, kindergardenGroupId)
         group.addChild(child)
-        kindergardenGroupRepository.save(group)
-        return child
+        return childRepository.save(child)
     }
 }

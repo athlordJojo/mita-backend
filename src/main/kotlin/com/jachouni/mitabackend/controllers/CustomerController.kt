@@ -22,7 +22,7 @@ class CustomerController(@Autowired
         val customer = modelMapper.map(dto, Customer::class.java)
         val createdCustomer = customerService.createCustomer(customer)
 
-        return ResponseEntity.ok(modelMapper.map(createdCustomer, CustomerDto::class.java))
+        return ResponseEntity(modelMapper.map(createdCustomer, CustomerDto::class.java), HttpStatus.CREATED)
     }
 
     @GetMapping(value = ["/customers"])
@@ -31,7 +31,7 @@ class CustomerController(@Autowired
         val modelMapper = ModelMapper()
         val customers = customerService.getAllCustomers()
         val dtos = customers.map { customer -> modelMapper.map(customer, CustomerDto::class.java) }.toList()
-        return ResponseEntity(dtos, HttpStatus.OK)
+        return ResponseEntity.ok(dtos)
     }
 
     @GetMapping(value = ["/customers/{customer-id}"])

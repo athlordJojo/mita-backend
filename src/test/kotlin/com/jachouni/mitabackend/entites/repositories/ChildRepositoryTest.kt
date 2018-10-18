@@ -11,7 +11,7 @@ class ChildRepositoryTest: ModelBaseTest() {
         val kindergarden = customer.kindergardens[0]
         val kindergardenGroup = kindergarden.kindergardenGroups[0]
 
-        val childs = childRepository.getChildsByCustomerIdAndKindergardenIdAndGroupId(customer.id!!, kindergarden.id!!, kindergardenGroup.id!!)
+        val childs = childRepository.getChilds(customer.id!!, kindergarden.id!!, kindergardenGroup.id!!)
         assertEquals(childsPerGroup, childs.size)
     }
 

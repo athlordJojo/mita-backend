@@ -23,7 +23,7 @@ class KindergardenGroupController(@Autowired val kindergardenGroupService: Kinde
         val kindergardenGroup = modelMapper.map(dto, KindergardenGroup::class.java)
         val updatedKindergardenGroup = kindergardenGroupService.createKindergardenGroup(customerId, kindergardenId, kindergardenGroup)
 
-        return ResponseEntity(modelMapper.map(updatedKindergardenGroup, KindergardenGroupDto::class.java), HttpStatus.OK)
+        return ResponseEntity(modelMapper.map(updatedKindergardenGroup, KindergardenGroupDto::class.java), HttpStatus.CREATED)
     }
 
     @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups"])
@@ -32,17 +32,17 @@ class KindergardenGroupController(@Autowired val kindergardenGroupService: Kinde
                               @PathVariable("kindergarden-id") kindergardenId: UUID): ResponseEntity<List<KindergardenGroupDto>> {
         val kindergardenGroups = kindergardenGroupService.getAllKindergardenGroups(customerId, kindergardenId)
         val dtos = kindergardenGroups.map { KindergardenGroupDto(id = it.id, name = it.name) }.toList()
-        return ResponseEntity(dtos, HttpStatus.OK)
+        return ResponseEntity.ok(dtos)
     }
 
-    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{groupId}"])
+    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{group-id}"])
     @ResponseBody
     fun getKindergardenGroup(@PathVariable("customer-id") customerId: UUID,
                              @PathVariable("kindergarden-id") kindergardenId: UUID,
-                             @PathVariable("groupId") id: UUID): ResponseEntity<KindergardenGroupDto> {
+                             @PathVariable("group-id") id: UUID): ResponseEntity<KindergardenGroupDto> {
         val kindergardenGroup = kindergardenGroupService.getKindergardenGroup(customerId, kindergardenId, id)
         val modelMapper = ModelMapper()
         val dto = modelMapper.map(kindergardenGroup, KindergardenGroupDto::class.java)
-        return ResponseEntity(dto, HttpStatus.OK)
+        return ResponseEntity.ok(dto)
     }
 }
