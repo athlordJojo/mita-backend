@@ -6,6 +6,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
+@NamedQueries(value = [(NamedQuery(name = "Groupbook.getGroupbook", query = "SELECT gb from Groupbook gb WHERE gb.group.id = :kindergardenGroupId AND gb.group.kindergarden.id = :kindergardenId AND gb.group.kindergarden.customer.id = :customerId"))])
 data class Groupbook(
         @Column(nullable = false)
         val name: String
@@ -47,17 +48,18 @@ data class Day(
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "day", cascade = [CascadeType.ALL])
     var entries: MutableList<DayEntry> = mutableListOf()
 
-    fun addDayEntry(entry:DayEntry){
+    fun addDayEntry(entry: DayEntry) {
         entries.add(entry)
         entry.day = this
     }
 
-    fun removeDayEntry(entry:DayEntry){
+    fun removeDayEntry(entry: DayEntry) {
         entries.remove(entry)
     }
 }
 
 @Entity
+@NamedQueries(value = [(NamedQuery(name = "DayEntry.getEntriesOfChild", query = "SELECT de FROM DayEntry de WHERE de.child.id = :childId AND de.child.group.id = :kindergardenGroupId AND de.child.group.kindergarden.id = :kindergardenId AND de.child.group.kindergarden.customer.id = :customerId"))])
 @Table(uniqueConstraints = [UniqueConstraint(columnNames = ["day_id", "child_id"])])
 data class DayEntry(
 

@@ -5,8 +5,8 @@ import java.util.*
 import javax.persistence.*
 
 @NamedQueries(value = [
-    NamedQuery(name = "Child.getChilds", query = "SELECT c FROM Child c WHERE c.kindergardenGroup.id = :kindergardenGroupId AND c.kindergardenGroup.kindergarden.id = :kindergardenId AND c.kindergardenGroup.kindergarden.customer.id = :customerId"),
-    NamedQuery(name = "Child.getChild", query = "SELECT c FROM Child c WHERE c.id = :childId AND c.kindergardenGroup.id = :kindergardenGroupId AND c.kindergardenGroup.kindergarden.id = :kindergardenId AND c.kindergardenGroup.kindergarden.customer.id = :customerId")
+    NamedQuery(name = "Child.getChilds", query = "SELECT c FROM Child c WHERE c.group.id = :kindergardenGroupId AND c.group.kindergarden.id = :kindergardenId AND c.group.kindergarden.customer.id = :customerId"),
+    NamedQuery(name = "Child.getChild", query = "SELECT c FROM Child c WHERE c.id = :childId AND c.group.id = :kindergardenGroupId AND c.group.kindergarden.id = :kindergardenId AND c.group.kindergarden.customer.id = :customerId")
 
 ]
 )
@@ -22,7 +22,7 @@ data class Child(
         @Column
         var sex: Sex,
         @ManyToOne(optional = false)
-        var kindergardenGroup: KindergardenGroup
+        var group: KindergardenGroup
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

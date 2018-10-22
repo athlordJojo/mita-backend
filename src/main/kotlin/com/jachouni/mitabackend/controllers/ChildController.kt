@@ -1,6 +1,7 @@
 package com.jachouni.mitabackend.controllers
 
 import com.jachouni.mitabackend.ChildDto
+import com.jachouni.mitabackend.DayEntryDto
 import com.jachouni.mitabackend.entities.Child
 import com.jachouni.mitabackend.services.ChildService
 import org.modelmapper.ModelMapper
@@ -44,11 +45,24 @@ class ChildController(@Autowired val childService: ChildService) {
     fun getChild(@PathVariable("customer-id") customerId: UUID,
                  @PathVariable("kindergarden-id") kindergardenId: UUID,
                  @PathVariable("group-id") kindergardenGroupId: UUID,
-                 @PathVariable("child-Id") childId: UUID
+                 @PathVariable("child-id") childId: UUID
     ): ResponseEntity<ChildDto> {
         val modelMapper = ModelMapper()
         val child = childService.getChildOfGroup(customerId, kindergardenId, kindergardenGroupId, childId)
         val dto = modelMapper.map(child, ChildDto::class.java)
         return ResponseEntity.ok(dto)
+    }
+
+    @GetMapping(value = ["/customers/{customer-id}/kindergardens/{kindergarden-id}/kindergardengroups/{group-id}/childs/{child-id}/day-entries"])
+    @ResponseBody
+    fun getEntriesOfChild(@PathVariable("customer-id") customerId: UUID,
+                          @PathVariable("kindergarden-id") kindergardenId: UUID,
+                          @PathVariable("group-id") kindergardenGroupId: UUID,
+                          @PathVariable("child-id") childId: UUID
+    ): ResponseEntity<List<DayEntryDto>> {
+        val modelMapper = ModelMapper()
+        val entriesOfChild = childService.getEntriesOfChild(customerId, kindergardenId, kindergardenGroupId, childId)
+        val dtos = entriesOfChild.map { it -> modelMapper.map(it, DayEntryDto::class.java) }.toList()
+        return ResponseEntity.ok(dtos)
     }
 }

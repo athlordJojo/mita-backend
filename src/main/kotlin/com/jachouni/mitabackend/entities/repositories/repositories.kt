@@ -14,15 +14,25 @@ interface KindergardenRepository : JpaRepository<Kindergarden, UUID> {
 }
 
 interface KindergardenGroupRepository : JpaRepository<KindergardenGroup, UUID> {
-    fun findAllByCustomerIdAndKindergardenId(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID): List<KindergardenGroup>
-    fun findByIdAndCustomerIdAndKindergardenId(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID, @Param("id") id: UUID): KindergardenGroup
+    fun getKindergardenGroups(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID): List<KindergardenGroup>
+    fun getKindergardenGroup(@Param("customerId") customerId: UUID, @Param("kindergardenId") kindergardenId: UUID, @Param("id") id: UUID): KindergardenGroup
 }
 
-interface GroupbookRepository : JpaRepository<Groupbook, UUID>
+interface GroupbookRepository : JpaRepository<Groupbook, UUID> {
+    fun getGroupbook(@Param("customerId") customerId: UUID,
+                     @Param("kindergardenId") kindergardenId: UUID,
+                     @Param("kindergardenGroupId") kindergardenGroupId: UUID): Groupbook
+
+}
 
 interface DayRepository : JpaRepository<Day, UUID>
 
-interface DayEntryRepository : JpaRepository<DayEntry, UUID>
+interface DayEntryRepository : JpaRepository<DayEntry, UUID> {
+    fun getEntriesOfChild(@Param("customerId") customerId: UUID,
+                          @Param("kindergardenId") kindergardenId: UUID,
+                          @Param("kindergardenGroupId") kindergardenGroupId: UUID,
+                          @Param("childId") childId: UUID): List<DayEntry>
+}
 
 interface ChildRepository : JpaRepository<Child, UUID> {
     fun getChilds(@Param("customerId") customerId: UUID,

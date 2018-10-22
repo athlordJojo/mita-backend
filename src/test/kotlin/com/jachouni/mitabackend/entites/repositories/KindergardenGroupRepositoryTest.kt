@@ -11,7 +11,7 @@ class KindergardenGroupRepositoryTest : ModelBaseTest() {
     fun testFindAllByCustomerIdAndKindergardenId() {
         val customer = getCustomer()
         customer.kindergardens.forEach { kindergarden: Kindergarden ->
-            assertEquals(this.groupsPerKindergarden, kindergardenGroupRepository.findAllByCustomerIdAndKindergardenId(kindergarden.customer.id!!, kindergarden.id!!).size)
+            assertEquals(this.groupsPerKindergarden, kindergardenGroupRepository.getKindergardenGroups(kindergarden.customer.id!!, kindergarden.id!!).size)
         }
     }
 
@@ -21,7 +21,7 @@ class KindergardenGroupRepositoryTest : ModelBaseTest() {
         val kindergarden = customer.kindergardens[0]
         val kindergardenGroup = kindergarden.kindergardenGroups[0]
 
-        val result = kindergardenGroupRepository.findByIdAndCustomerIdAndKindergardenId(customerId = customer.id!!, kindergardenId = kindergarden.id!!, id = kindergardenGroup.id!!)
+        val result = kindergardenGroupRepository.getKindergardenGroup(customerId = customer.id!!, kindergardenId = kindergarden.id!!, id = kindergardenGroup.id!!)
         assertEquals(kindergardenGroup.id!!, result.id!!)
         assertEquals(kindergardenGroup.name, result.name)
     }

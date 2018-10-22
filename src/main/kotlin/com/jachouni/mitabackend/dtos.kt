@@ -17,9 +17,13 @@ data class KindergardenGroupDto(var id: UUID? = null, var name: String)
 data class GroupbookDto(var id: UUID? = null, var name: String)
 
 @DtoAnnotation
-data class ChildDto(var id: UUID? = null, var firstname: String, var lastname: String,
+data class ChildDto(var id: UUID? = null, var firstname: String, var lastname: String, var sex:String,
                     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
                     var birthday: LocalDate)
+
+@DtoAnnotation
+data class DayEntryDto(var id: UUID? = null, var dayDate:String, var arrivedAt:String?, var leftAt:String?)
+
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

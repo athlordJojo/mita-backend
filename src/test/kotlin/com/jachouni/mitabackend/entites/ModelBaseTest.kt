@@ -58,7 +58,8 @@ abstract class ModelBaseTest {
         customer.kindergardens.forEach {
             for (i in 1..groupsPerKindergarden) {
                 val groupbook = Groupbook(name = "Groupbook of Group $i of kindergarden: ${it.name}")
-                val group = KindergardenGroup(name = "Group $i of kindergarden: ${it.name}", kindergarden = it, groupbook = groupbook)
+                val group = KindergardenGroup(name = "Group $i of kindergarden: ${it.name}", kindergarden = it)
+                group.addGroupbook(groupbook)
                 it.addKindergardenGroup(group)
 
                 for (k in 1..daysPerGroupbook) {
@@ -84,7 +85,7 @@ abstract class ModelBaseTest {
             }
         }
 
-        customerRepository.save(customer)
+        customerRepository.saveAndFlush(customer)
         return customer
     }
 }
